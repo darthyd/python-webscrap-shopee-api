@@ -1,4 +1,3 @@
-import os
 from time import sleep
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -12,19 +11,17 @@ def getData(q):
     url_base = 'https://shopee.com.br/search?keyword='
 
     option = Options()
-    option.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
-    option.add_argument("--headless")
+    # option.headless = False
+    option.add_argument('--headless')
+    option.add_argument('window-size=1920x1080')
     option.add_argument("--disable-dev-shm-usage")
     option.add_argument("--no-sandbox")
-    nav = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=option)
+    nav = webdriver.Chrome(options=option)
 
     nav.get(url_base + q)
 
     # wait for load
     sleep(3)
-
-    # scroll at the bottom
-    SCROLL_PAUSE_TIME = 0.3
 
     # Get scroll height
     last_height = nav.execute_script("return document.body.scrollHeight")
@@ -37,10 +34,11 @@ def getData(q):
         input.send_keys(Keys.PAGE_DOWN)
 
         # wait for another action
-        sleep(SCROLL_PAUSE_TIME)
+        sleep(0.3)
 
         # Calculate new scroll height and compare with last scroll height
         new_height = nav.execute_script("return document.body.scrollHeight")
+        print(new_height, last_height)
         if new_height == last_height:
             break
         last_height = new_height
@@ -56,17 +54,17 @@ def getData(q):
         soup = BeautifulSoup(card, 'html.parser')
 
         # find div with name description of the product
-        nome = soup.find('div', attrs={'class': 'yQmmFK _1POlWt _36CEnF'}).text
-        # image = soup.find('img')['src']
+        nome = soup.find('div', attrs={'class': 'yQmmFK _1POlWt _36CEnF'}).getText()
+        image = soup.find('img')['src']
         links = 'https://shopee.com.br' + soup.find('a', attrs={'data-sqe': 'link'})['href']
-        preco = soup.find('span', attrs={'class': '_29R_un'}).text
+        preco = soup.find('span', attrs={'class': '_24JoLh'}).getText()
 
         if(nome):
             my_list.append({
-                "name": nome, 
-                #"img": image, 
+                "name": nome,
+                "img": image,
                 "link": links, 
-                "price": preco
+                "price": preco,
             })
 
     nav.quit()
