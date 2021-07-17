@@ -6,7 +6,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello World!"
+    doc = '\n\
+{\n\
+  "api":\n\
+    {\n\
+      "name": "Webscrap Shopee"\n\
+      "endpoints":\n\
+         { \n\
+           "search": "/api/search/?query=KEY OF SEARCH" \n\
+         } \n\
+      "author": "Lucas Oliveira"\n\
+    }\n\
+} \n\
+'
+    return doc
 
 @app.route('/api/search')
 def search():
