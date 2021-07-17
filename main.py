@@ -10,13 +10,13 @@ def home():
 {\n\
   "api":\n\
     {\n\
-      "name": "Webscrap Shopee"\n\
+      "name": "Webscrap Shopee",\n\
       "endpoints":\n\
          { \n\
-           "search": "/api/search/?query=KEY OF SEARCH" \n\
-         } \n\
-      "author": "Lucas Oliveira"\n\
-    }\n\
+           "search": "/api/search/?query=KEY OF SEARCH", \n\
+         }, \n\
+      "author": "Lucas Oliveira",\n\
+    },\n\
 } \n\
 '
     return doc
