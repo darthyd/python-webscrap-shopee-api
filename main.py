@@ -13,7 +13,7 @@ def home():
       "name": "Webscrap Shopee",\n\
       "endpoints":\n\
          { \n\
-           "search": "/api/search/?query=KEY OF SEARCH", \n\
+           "search": "/api/search?query=KEY OF SEARCH", \n\
          }, \n\
       "author": "Lucas Oliveira",\n\
     },\n\
